@@ -24,11 +24,10 @@ document.addEventListener("DOMContentLoaded", e=>{
       }
       else if(opt=="desviacionE"){
         estandar(txtserie);
-      }else if(opt=="desviacionT"){
-        tipica(txtserie);
       }
   });
 });
+
 //MEDIA ARITMETICA
 function media(serie=[]){
   //obtener los datos del input separados por coma con el metodo split("")
@@ -38,7 +37,7 @@ function media(serie=[]){
   let suma=0;
  //recorre cada uno de los elementos dentro del arreglo y los suma cada uno
   arreglo.forEach(function(index) {
-     suma+=parseInt(index);
+     suma+=parseFloat(index);
    console.log(suma);
   });
   let  $resp=document.querySelector("#lblresp");
@@ -65,7 +64,7 @@ function mediaArmonica(serie=[]){
   }
 
   let  $respu=document.querySelector("#lblresp");
-  $respu.innerHTML=`La Desviacion Estandar es:  ${(arreglo.length/suma)}`;
+  $respu.innerHTML=`La Media Armonica es:  ${(arreglo.length/suma)}`;
 }
 
 //mediana
@@ -105,6 +104,7 @@ function Moda(serie=[]){
   let datos=document.getElementById("txtserien").value;
   let array=datos.split(",").sort(compareNumbers);
   let repetidos = [];
+  let=mayorrepetido=[];
  let temporal = [];
   
   array.forEach((value,index)=>{
@@ -115,14 +115,16 @@ function Moda(serie=[]){
      * ver si esta ingresado al array. indexOf returna
      * -1 si el elemento no se encuetra
      **/
-    if(temporal.indexOf(value)!=-1 && repetidos.indexOf(value)==-1) {
-       repetidos.push(value);}  
+    if(temporal.indexOf(value)!=-1 && repetidos.indexOf(value)==-1) {   
+        repetidos.push(value); 
+      }  
       
   });
-  let $resp=document.getElementById("lblresp")
-  $resp=`La Moda es: ${(repetidos)}`;
+  let $respu=document.getElementById("lblresp")
+  console.log(mayorrepetido);
+  $respu.innerHTML=`La Moda es: ${(repetidos)}`;
   
-  console.log(repetidos);
+ 
 }
 
 
@@ -133,36 +135,38 @@ function estandar(serie=[]){
   var numeros=document.querySelector("#txtserien").value;
    var arreglo=numeros.split(",");
   var sumacuadradodivN=0,sumaN=0;
-   arreglo.forEach(function(elemento) {
-     sumaN+=parseFloat(elemento);
-     console.log(sumaN);
-     
+  //recorre cada dato del arregloy le multiplica total de datos por el cuadrado de cada uno mientras los suma y los asigna a la variable 
+   arreglo.forEach(function(elementos) {
+    sumacuadradodivN+=arreglo.length *Math.pow(elementos,2); 
+    console.log("sumacuadradiduvN ", sumacuadradodivN);
     
-  });
-  let media=sumaN/arreglo.length;
-  console.log("media ",media);
+      
+});
+
+let sumadatos=0,sumacuadradaa;
+//suma todos los datos del arreglo
+arreglo.forEach(function(indexs){
+  sumadatos+=parseFloat(indexs); 
+  console.log("sumadatos ",sumadatos);
+});
+//sele saca el cuadrado a la suma
+sumacuadradaa=Math.pow(sumadatos,2);
+
+
+  console.log("suma cuadrado",sumacuadradodivN,"div ",sumacuadradaa);
+  //el dividendo: el length del arreglo multiplicado por el length menos uno
+  let div=arreglo.length*(arreglo.length-1);
+  console.log(div);
   
 
-   arreglo.forEach(function(elementos) {
-    sumacuadradodivN+=Math.pow(elementos-media,2)/arreglo.length;   
-});
-  console.log("suma cuadrado",sumacuadradodivN);
-  let desviacionestandar=Math.sqrt(sumacuadradodivN)
+  //la variable que contiene la primera operacion le resta la segunda
+  let desviacionestandar=sumacuadradodivN-sumacuadradaa;
+  //se saca la desviacion estandar dividiendo el resultado de la resta entre el resultado del dividendo
+  let desviacionfinal=desviacionestandar/div;
 
      $respu=document.querySelector("#lblresp");
-   $respu.innerHTML=`La Desviacion Estandar es:  ${(desviacionestandar)}`;
+   $respu.innerHTML=`La Desviacion Estandar es:  ${(desviacionfinal )} y La Tipica es: ${(Math.sqrt(desviacionfinal,2))} `;
 
-
-}
-//TIPICA
-function tipica(serie=[]){
-  let txtdatos=document.getElementById("txtserien").value;
- let  datost= parseFloat(txtdatos.split(","));
- console.log("array ",datost);
- 
- 
-  let  $respu=document.querySelector("#lblresp");
-  $respu.innerHTML=`La Desviacion Tipica Es : ${(Math.sqrt(datost))}`;
 
 }
 
